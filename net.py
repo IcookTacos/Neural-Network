@@ -47,7 +47,19 @@ class Network (object):
                     print("Epoch complete")
                     
         def updateMiniBatch(self,miniBatch,eta):
-            ## Updates networks wieghts and biases with backpropogation
-            
-            ## TODO: continue here
+            ## Updates networks wieghts and biases with backpropogation## nabla biases, but what is nabla?
+            nablaB = [np.zeroes(b.shape) for b in self.bias]
+    
+            ## same as above but weight
+            nablaW = [np.zeroes(b.shape) for w in self.weight]
+    
+            for x, y in miniBatch:
+                deltaNablaB, deltaNablaW = self.backdrop(x,y)
+                ## All of this is just mystery to me, don't understand anything 
+                dablaB = [nb+dnb for nb, dnb in zip(nablaB,deltaNablaB)]
+                dablaW = [nw+dnw for nw, dnw in zip(nablaW,deltaNablaW)]
+                self.weight = [w-(eta/len(miniBatch))*nw for w,nw in zip(self.weight,nablaW)]
+    
+                self.weight = [b-(eta/len(miniBatch))*nb for b,nb in zip(self.bias,nablaB)]
+    
 
